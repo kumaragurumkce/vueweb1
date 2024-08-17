@@ -7,10 +7,13 @@
           <div class="card-body">
             <h5 class="card-title">{{ product.name }}</h5>
             <p class="card-text">$ {{ product.price }}</p>
-            <button class="btn btn-primary" @click="addToCart(product)">Add to Cart</button>
+            <button class="btn btn-primary" @click="handleAddToCart(product)">Add to Cart</button>
           </div>
         </div>
       </div>
+    </div>
+    <div v-if="message" class="alert alert-success">
+{{message}}
     </div>
   </div>
 </template>
@@ -20,10 +23,23 @@ import { mapState, mapActions } from 'vuex';
 
 export default {
   computed: {
-    ...mapState(['products'])
+    ...mapState(['products','message'])
   },
   methods: {
-    ...mapActions(['addToCart'])
-  }
+    ...mapActions(['addToCart']),
+    async handleAddToCart(product){
+     await this.addToCart(product).then(()=>{
+        setTimeout(() => {
+console.log('aaaaaaaaaa');
+
+          this.$store.dispatch('setMessage','')
+        }, 3000);
+      })
+console.log('addToCart called');
+
+this.$store.dispatch('addToCart', product);
+
+    }
+}
 };
 </script>

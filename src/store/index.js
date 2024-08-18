@@ -8,7 +8,7 @@ export default createStore({
       { id: 3, name: 'Product 3', price: 300, quantity: 0 }
     ],
     cart: [],
-    message:''
+    message: ''
   },
   mutations: {
     ADD_TO_CART(state, product) {
@@ -16,20 +16,17 @@ export default createStore({
       if (item) {
         item.quantity++;
       } else {
-        state.cart.push({ ...product, quantity: 1, });
-
+        state.cart.push({ ...product, quantity: 1 });
       }
-      state.message='Product added the cart successfully'
     },
     REMOVE_FROM_CART(state, productId) {
       state.cart = state.cart.filter(p => p.id !== productId);
-      state.message='Product deleted '
     },
     CLEAR_CART(state) {
       state.cart = [];
     },
-    SET_MESSAGE(state,message){
-      state.message=message
+    SET_MESSAGE(state, message) {
+      state.message = message;
     }
   },
   actions: {
@@ -42,8 +39,8 @@ export default createStore({
     clearCart({ commit }) {
       commit('CLEAR_CART');
     },
-    setMessage({commit},message){
-      commit('SET_MESSAGE',message);
+    setMessage({ commit }, message) {
+      commit('SET_MESSAGE', message);
     }
   },
   getters: {
@@ -53,8 +50,8 @@ export default createStore({
     cartItems(state) {
       return state.cart;
     },
-message(state){
-      return state.message
-}
+    message(state) {
+      return state.message;
+    }
   }
 });

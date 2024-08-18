@@ -13,7 +13,7 @@
       </div>
     </div>
     <div v-if="message" class="alert alert-success">
-{{message}}
+      {{ message }}
     </div>
   </div>
 </template>
@@ -23,23 +23,21 @@ import { mapState, mapActions } from 'vuex';
 
 export default {
   computed: {
-    ...mapState(['products','message'])
+    ...mapState(['products', 'message'])
   },
   methods: {
-    ...mapActions(['addToCart']),
-    async handleAddToCart(product){
-     await this.addToCart(product).then(()=>{
-        setTimeout(() => {
-console.log('aaaaaaaaaa');
-
-          this.$store.dispatch('setMessage','')
-        }, 3000);
-      })
-console.log('addToCart called');
-
-this.$store.dispatch('addToCart', product);
-
+    ...mapActions(['addToCart', 'setMessage']),
+    async handleAddToCart(product) {
+      // Add the product to the cart
+      await this.addToCart(product);
+      // Dispatch a message to indicate that the product was added
+      const successMessage = `${product.name} has been added to the cart!`;
+      this.setMessage(successMessage);
+      // Clear the message after 3 seconds
+      setTimeout(() => {
+        this.setMessage('');
+      }, 3000);
     }
-}
+  }
 };
 </script>
